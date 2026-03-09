@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>SoLGrafix – Graphic Designer Portfolio</title>
+  <meta name="description" content="Modern, timeless graphic design portfolio. Specializing in brand identity, print, and digital design.">
+
+  <!-- Open Graph / social -->
+  <meta property="og:title" content="SoLGrafix – Graphic Designer">
+  <meta property="og:description" content="Modern, timeless graphic design portfolio. Specializing in brand identity, print, and digital design.">
+  <meta property="og:image" content="https://picsum.photos/id/100/1200/630"> <!-- placeholder, replace with actual -->
+  <meta property="og:url" content="https://www.solgrafix.design">
+  <meta property="og:type" content="profile">
+
+  <!-- Google Fonts: Inter / Space Grotesk + Cormorant Garamond / Lora -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Space+Mono&family=Cormorant+Garamond:wght@400;500;600&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- inline critical CSS / style -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: #fafafa;
+      color: #1e1e1e;
+      font-family: 'Cormorant Garamond', 'Lora', serif;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, .nav, .button, .logo, .work-item__title, .modal__close, .form input, .form button {
+      font-family: 'Inter', 'Space Grotesk', sans-serif;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+    }
+
+    /* typography scale */
+    h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 500; line-height: 1.1; }
+    h2 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 500; margin-bottom: 2rem; letter-spacing: -0.02em; }
+    h3 { font-size: 1.25rem; font-weight: 500; }
+    .subhead { font-size: 1.25rem; font-weight: 400; color: #4a4a4a; }
+
+    /* layout containers */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    section {
+      padding: 5rem 0;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 0;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 600;
+      text-decoration: none;
+      color: #1e1e1e;
+      letter-spacing: -0.02em;
+    }
+   
+    .nav {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .nav a {
+      text-decoration: none;
+      color: #1e1e1e;
+      font-weight: 500;
+      font-size: 1rem;
+      transition: color 0.2s;
+      padding: 0.5rem 0;
+      border-bottom: 2px solid transparent;
+    }
+    .nav a:hover {
+      color: #c9645a;
+      border-bottom-color: #c9645a;
+    }
+
+    /* hero */
+    .hero {
+      padding: 3rem 0 4rem 0;
+    }
+    .hero h1 {
+      max-width: 12ch;
+    }
+    .hero .subhead {
+      margin-top: 1rem;
+      color: #4a4a4a;
+      font-size: 1.5rem;
+    }
+
+    /* WORK GRID — asymmetrical masonry style (3 cols) */
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .work-item {
+      border-radius: 4px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+    }
+    .work-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 20px -8px rgba(0,0,0,0.1);
+    }
+    .work-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      aspect-ratio: attr(width)/attr(height); /* fallback */
+      object-fit: cover;
+    }
+    .work-item__title {
+      padding: 1rem;
+      font-size: 0.95rem;
+      font-weight: 500;
+      background: #fafafa;
+      border-top: 1px solid #eee;
+    }
+
+    /* testimonials grid */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .testimonial-card {
+      background: #ffffff;
+      border-radius: 4px;
+      padding: 2rem 1.5rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+      border: 1px solid #f0f0f0;
+    }
+    .testimonial-card p {
+      font-size: 1.1rem;
+      font-style: italic;
+      margin-bottom: 1.5rem;
+    }
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .testimonial-author img {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .author-name {
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+    }
+    .author-title {
+      font-size: 0.85rem;
+      color: #666;
+    }
+
+    /* about */
+    .about-content {
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+    .profile-pic {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #fff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+    .bio {
+      flex: 1;
+      font-size: 1.25rem;
+    }
+    .social-links {
+      margin-top: 1.5rem;
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+    .social-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      text-decoration: none;
+      color: #1e1e1e;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .social-links a:hover {
+      color: #c9645a;
+      border-bottom-color: #c9645a;
+    }
+    /* inline SVG icons */
+    .social-icon {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* contact form */
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      transition: border 0.2s;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #c9645a;
+    }
+    .error-message {
+      color: #c9645a;
+      font-size: 0.85rem;
+      margin-top: 0.3rem;
+      font-family: 'Inter', sans-serif;
+      display: none;
+    }
+    .form-group.error .error-message {
+      display: block;
+    }
+    .form-group.error input,
+    .form-group.error textarea {
+      border-color: #c9645a;
+    }
+    .success-message {
+      background: #eaf7e8;
+      color: #1e1e1e;
+      padding: 1rem;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+      display: none;
+    }
+    .btn {
+      background: none;
+      border: 2px solid #1e1e1e;
+      padding: 0.8rem 2.5rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+    .btn:hover {
+      background: #c9645a;
+      border-color: #c9645a;
+      color: white;
+    }
+
+    /* footer */
+    .footer {
+      padding: 2rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #eaeaea;
+      font-size: 0.9rem;
+    }
+    .footer-links a {
+      margin-left: 2rem;
+      text-decoration: none;
+      color: #1e1e1e;
+    }
+    .footer-links a:hover {
+      color: #c9645a;
+    }
+
+    /* MODAL lightbox */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-color: rgba(250,250,250,0.95);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+    .modal[aria-hidden="false"] {
+      display: flex;
+    }
+    .modal-content {
+      background: #fafafa;
+      max-width: 900px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      border-radius: 4px;
+      box-shadow: 0 20px 40px -10px rgba(0,0,0,0.2);
+      padding: 2rem;
+      position: relative;
+      border: 1px solid #eee;
+    }
+    .modal__close {
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      font-size: 2rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #1e1e1e;
+      padding: 0.5rem 0.8rem;
+      line-height: 1;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+    .modal__close:hover {
+      background: #c9645a;
+      color: white;
+    }
+    .modal-img {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+      margin-bottom: 1.5rem;
+    }
+    .modal-title {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    .modal-desc {
+      font-size: 1.2rem;
+      color: #444;
+    }
+
+    /* mobile adaptations */
+    @media (max-width: 800px) {
+      .work-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .testimonials-grid {
+        grid-template-columns: 1fr;
+      }
+      .about-content {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+    @media (max-width: 550px) {
+      .work-grid {
+        grid-template-columns: 1fr;
+      }
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .nav {
+        gap: 1.2rem;
+      }
+      .nav a {
+        font-size: 1.1rem; /* 44px touch target */
+        padding: 0.8rem 0;
+      }
+      
+      .btn, .modal__close {
+        min-height: 44px;
+        min-width: 44px;
+      }
+      .modal-content {
+        padding: 1.5rem;
+      }
+    }
+
+    /* hide modal by default */
+    .modal[aria-hidden="true"] {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- SVG sprite for social icons (simple minimalist symbols) -->
+  <svg style="display: none;" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="icon-behance" viewBox="0 0 24 24">
+  <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" fill="none" stroke-width="1.5"/>
+  <path d="M8 15h4M8 9h4M16 12h-2M15 10h-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M13 12.5c0 1.5 1 2 2.5 2 1.5 0 2.5-.5 2.5-2 0-1.5-1-2-2.5-2h-2.5v2z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+  <path d="M8 12h3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+</symbol>
+    <symbol id="icon-linkedin" viewBox="0 0 24 24">
+  <rect x="3" y="3" width="18" height="18" rx="4" stroke="currentColor" fill="none" stroke-width="1.5"/>
+  <text x="7" y="17" font-family="Inter" font-size="10" fill="currentColor">in</text>
+</symbol>
+    <symbol id="icon-instagram" viewBox="0 0 24 24">
+  <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" fill="none" stroke-width="1.5"/>
+  <circle cx="12" cy="12" r="4" stroke="currentColor" fill="none" stroke-width="1.5"/>
+  <circle cx="18.5" cy="5.5" r="1" fill="currentColor"/>
+</symbol>
+ <symbol id="icon-download" viewBox="0 0 24 24">
+    <path d="M12 3v10M8 11l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" stroke="currentColor" stroke-width="1.5" fill="none"/>
+  </symbol>
+  </svg>
+
+  <!-- header -->
+  <div class="container">
+    <header class="header">
+      <a href="#" class="logo">Solution Abiola</a>
+      <nav class="nav">
+        <a href="#work">Work</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#contact">Contact</a>
+        <a href="/assets/Resume.pdf" download aria-label="Download resume">
+  Resume <svg class="social-icon"><use href="#icon-download"></use></svg>
+</a>
+          
+        </a>
+      </nav>
+    </header>
+  </div>
+
+  <main>
+    <!-- hero -->
+    <section class="hero container">
+      <h1>Bringing Ideas to life, one pixel at a time.</h1>
+      <div class="subhead">Brand identity, print, social media fliers, and digital design.</div>
+    </section>
+
+    <!-- work section -->
+    <section id="work" class="container">
+      <h2>Selected work</h2>
+      <div class="work-grid" id="work-grid">
+        <!-- 6 items, manually varied aspect ratios for asymmetry -->
+        <div class="work-item" data-img="https://picsum.photos/id/1015/600/800" data-title="Lumina – Brand Identity" data-desc="Comprehensive brand identity including logo, stationery, and packaging. Inspired by natural light.">
+          <img src="https://picsum.photos/id/1015/600/800" alt="Lumina brand project" loading="lazy" width="600" height="800">
+          <div class="work-item__title">Brand Identity – Lumina</div>
+        </div>
+        <div class="work-item" data-img="https://picsum.photos/id/100/600/500" data-title="Field Notes – Editorial" data-desc="Art direction and layout for a limited edition book on minimalism.">
+          <img src="https://picsum.photos/id/100/600/500" alt="Field notes editorial" loading="lazy" width="600" height="500">
+          <div class="work-item__title">Editorial – Field Notes</div>
+        </div>
+        <div class="work-item" data-img="https://picsum.photos/id/1043/600/600" data-title="Onda – Packaging" data-desc="Bold, sustainable packaging for a skincare startup.">
+          <img src="https://picsum.photos/id/1043/600/600" alt="Onda packaging" loading="lazy" width="600" height="600">
+          <div class="work-item__title">Packaging – Onda</div>
+        </div>
+        <div class="work-item" data-img="https://picsum.photos/id/102/600/400" data-title="Cove – Digital" data-desc="Responsive website and UI for a wellness retreat.">
+          <img src="https://picsum.photos/id/102/600/400" alt="Cove website" loading="lazy" width="600" height="400">
+          <div class="work-item__title">Digital – Cove</div>
+        </div>
+        <div class="work-item" data-img="https://picsum.photos/id/106/600/700" data-title="Atlas – Print" data-desc="Poster series for a contemporary dance company.">
+          <img src="https://picsum.photos/id/106/600/700" alt="Atlas posters" loading="lazy" width="600" height="700">
+          <div class="work-item__title">Print – Atlas</div>
+        </div>
+        <div class="work-item" data-img="https://picsum.photos/id/1084/600/450" data-title="Nomad – Identity" data-desc="Visual identity for a co-working space, including signage and collateral.">
+          <img src="https://picsum.photos/id/1084/600/450" alt="Nomad identity" loading="lazy" width="600" height="450">
+          <div class="work-item__title">Identity – Nomad</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- testimonials -->
+    <section id="testimonials" class="container">
+      <h2>Kind words</h2>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <p>“Alex brought a level of clarity to our brand that we didn’t know was possible. Every detail considered.”</p>
+          <div class="testimonial-author">
+            <img src="https://picsum.photos/id/64/80/80" alt="Jamie Lee" loading="lazy">
+            <div><span class="author-name">Jamie Lee</span><br><span class="author-title">Creative Director, Fieldwork</span></div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p>“A true minimalist at heart. The work is timeless, and collaboration was effortless.”</p>
+          <div class="testimonial-author">
+            <img src="https://picsum.photos/id/65/80/80" alt="Riley Smith" loading="lazy">
+            <div><span class="author-name">Riley Smith</span><br><span class="author-title">Founder, Solace Studio</span></div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p>“The identity Alex designed still feels fresh years later. Exactly what we needed.”</p>
+          <div class="testimonial-author">
+            <img src="https://picsum.photos/id/91/80/80" alt="Taylor Chen" loading="lazy">
+            <div><span class="author-name">Taylor Chen</span><br><span class="author-title">Partner, Common Ground</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- about -->
+    <section id="about" class="container">
+      <h2>About</h2>
+      <div class="about-content">
+        <img src="/assets/images/profile/Me.png" alt="Solution Abiola's portrait" class="profile-pic" loading="lazy">
+        <div class="bio">
+          <p>I’m Solution, a graphic designer with a passion for minimalism (though I tend to break the rules at times) and storytelling. <br>Based in Nigeria, working worldwide.</p>
+          <div class="social-links">
+            <a href="https://www.behance.net/abiolasolutionz" aria-label="Behance"><svg class="social-icon"><use href="#icon-behance"></use></svg> Behance</a>
+           <a href="https://www.linkedin.com/in/solution-abiola-871519216/" aria-label="LinkedIn"><svg class="social-icon"><use href="#icon-linkedin"></use></svg> LinkedIn</a>
+            <a href="https://www.instagram.com/solgrafix/" aria-label="Instagram"><svg class="social-icon"><use href="#icon-instagram"></use></svg> Instagram</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- contact -->
+    <section id="contact" class="container">
+      <h2>Let’s work together</h2>
+      <form id="contact-form" novalidate>
+        <div class="form-group" id="name-group">
+          <label for="name">Name *</label>
+          <input type="text" id="name" name="name" required>
+          <div class="error-message">Name is required</div>
+        </div>
+        <div class="form-group" id="email-group">
+          <label for="email">Email *</label>
+          <input type="email" id="email" name="email" required>
+          <div class="error-message">Valid email required</div>
+        </div>
+        <div class="form-group" id="message-group">
+          <label for="message">Message * (min 10 characters)</label>
+          <textarea id="message" name="message" rows="4" required minlength="10"></textarea>
+          <div class="error-message">Message must be at least 10 characters</div>
+        </div>
+        <div class="success-message" id="form-success">Thanks! Your message has been sent (demo).</div>
+        <button type="submit" class="btn">Send message</button>
+      </form>
+    </section>
+  </main>
+
+  <!-- footer -->
+  <div class="container">
+    <footer class="footer">
+      <div>© 2026 Solution Abiola</div>
+      <div class="footer-links">
+        <a href="https://www.behance.net/abiolasolutionz">Behance</a>
+        <a href="https://www.linkedin.com/in/solution-abiola-871519216/">LinkenIn</a>
+        <a href="https://www.instagram.com/solgrafix/">Instagram</a>
+      </div>
+    </footer>
+  </div>
+
+  <!-- MODAL lightbox -->
+  <div class="modal" id="projectModal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="project detail">
+    <div class="modal-content">
+      <button class="modal__close" id="modalCloseBtn" aria-label="Close modal">&times;</button>
+      <img src="" alt="" class="modal-img" id="modalImage">
+      <h3 class="modal-title" id="modalTitle"></h3>
+      <p class="modal-desc" id="modalDesc"></p>
+    </div>
+  </div>
+
+  <!-- Google Analytics placeholder – replace GA_MEASUREMENT_ID -->
+  <!--
+  <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'GA_MEASUREMENT_ID');
+  </script>
+  -->
+
+  <!-- JSON-LD structured data (Person) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Solution Abiola",
+    "jobTitle": "Graphic Designer",
+    "description": "Modern, timeless graphic design specializing in brand identity, print, and digital.",
+    "url": "https://www.solutionabiola.design",
+    "sameAs": [
+      "https://www.behance.net/abiolasolutionz",
+      "https://www.linkedin.com/in/solution-abiola-871519216/",
+      "https://www.instagram.com/solgrafix/"
+    ]
+  }
+  </script>
+
+  <!-- Vanilla JavaScript -->
+  <script>
+    (function() {
+      // smooth scroll for nav
+      document.querySelectorAll('.nav a').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          const targetId = this.getAttribute('href');
+          if (targetId && targetId.startsWith('#')) {
+            e.preventDefault();
+            const targetEl = document.querySelector(targetId);
+            if (targetEl) {
+              targetEl.scrollIntoView({ behavior: 'smooth' });
+            }
+          }
+        });
+      });
+
+      // Intersection Observer for fade-in sections
+      const sections = document.querySelectorAll('section');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -10px 0px' });
+      sections.forEach(section => observer.observe(section));
+
+      // ----- MODAL LIGHTBOX -----
+      const modal = document.getElementById('projectModal');
+      const modalImg = document.getElementById('modalImage');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalDesc = document.getElementById('modalDesc');
+      const closeBtn = document.getElementById('modalCloseBtn');
+      const workItems = document.querySelectorAll('.work-item');
+
+      function openModal(imgSrc, title, desc) {
+        modalImg.src = imgSrc;
+        modalImg.alt = title;
+        modalTitle.textContent = title;
+        modalDesc.textContent = desc;
+        modal.setAttribute('aria-hidden', 'false');
+        // focus management
+        closeBtn.focus();
+      }
+
+      function closeModal() {
+        modal.setAttribute('aria-hidden', 'true');
+      }
+
+      workItems.forEach(item => {
+        item.addEventListener('click', () => {
+          const img = item.querySelector('img').src; // use original
+          const title = item.dataset.title || 'Project';
+          const desc = item.dataset.desc || 'Description coming soon.';
+          openModal(img, title, desc);
+        });
+      });
+
+      closeBtn.addEventListener('click', closeModal);
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal(); // click outside content
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') {
+          closeModal();
+        }
+      });
+
+      // ----- FORM VALIDATION -----
+      const form = document.getElementById('contact-form');
+      const nameInput = document.getElementById('name');
+      const emailInput = document.getElementById('email');
+      const messageInput = document.getElementById('message');
+      const successMsg = document.getElementById('form-success');
+
+      function showError(group, show) {
+        if (show) group.classList.add('error');
+        else group.classList.remove('error');
+      }
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        let isValid = true;
+
+        // name
+        if (!nameInput.value.trim()) {
+          showError(document.getElementById('name-group'), true);
+          isValid = false;
+        } else {
+          showError(document.getElementById('name-group'), false);
+        }
+
+        // email
+        const email = emailInput.value.trim();
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email || !emailPattern.test(email)) {
+          showError(document.getElementById('email-group'), true);
+          isValid = false;
+        } else {
+          showError(document.getElementById('email-group'), false);
+        }
+
+        // message min 10 chars
+        const msg = messageInput.value.trim();
+        if (msg.length < 10) {
+          showError(document.getElementById('message-group'), true);
+          isValid = false;
+        } else {
+          showError(document.getElementById('message-group'), false);
+        }
+
+        if (isValid) {
+          successMsg.style.display = 'block';
+          console.log('Form valid – demo success:', { name: nameInput.value, email: emailInput.value, message: msg });
+          // optionally reset fields
+          // form.reset(); // disabled to keep placeholder
+          setTimeout(() => { successMsg.style.display = 'none'; }, 4000);
+        } else {
+          successMsg.style.display = 'none';
+        }
+      });
+    })();
+  </script>
+
+  <!-- small inline style to ensure modal hidden by default and visible when aria-hidden false -->
+  <style>
+    /* ensure modal hidden until opened */
+    .modal[aria-hidden="true"] { display: none; }
+  </style>
+
+  <!-- replace placeholder images and texts as needed -->
+</body>
+</html>
